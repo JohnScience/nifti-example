@@ -11,8 +11,8 @@ fn main() -> Result<(), NiftiError> {
     
     let volume = obj.volume().into_ndarray::<u8>()?;
     let matrix_it = volume.axis_iter(Axis(dimensionality - 1));
+    let mut rgb = RgbImage::new(dim[0] as u32,dim[1] as u32);
     for (i, m) in matrix_it.enumerate() {
-        let mut rgb = RgbImage::new(dim[0] as u32,dim[1] as u32);
         for (x, y, pixel) in rgb.enumerate_pixels_mut() {
             let val = m[[x as usize, y as usize]];
             *pixel = Rgb([val, val, val]);
